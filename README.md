@@ -1,12 +1,12 @@
 # PetriNet Modelling of a Rail Network
 The network of interest is given as follows, which consists of 11 sections.
 
-![Figure 1: Whole Network](./PetriDiagram/WholeNetwork.png)
+![Figure 1: Whole Network](PetriDiagram/WholeNetwork.png)
 
 The network can be further divided into the passenger line: 
-![Figure 2: Passenger Line](./PetriDiagram/PassengerLine.png)
+![Figure 2: Passenger Line](PetriDiagram/PassengerLine.png)
 and the freight line connecting to the Islington Workshop:
-![Figure 3: Passenger Line](./PetriDiagram/FreightLine.png)
+![Figure 3: Passenger Line](PetriDiagram/FreightLine.png)
 The two lines are disconnected and trains cannot be move from passenger line to freight line and vice versa. 
 
 # Train movements
@@ -50,7 +50,18 @@ Two-way section allows trains to move in both directions. A place-transition str
 
 Two-way sections contain two places, corresponding to N-S direction (L) and S-N direction (R). It is noted that some papers uses a simplified version of the above place-transition structure:
 
-![Figure 5: Two way Network](./PetriDiagram/TwoWaySimplified.drawio.svg)
+![Figure 5: Two way Network Simplified](./PetriDiagram/TwoWaySimplified.drawio.svg)
 
 However, I decided to keep the un-simplified version to make explicit that trains that are moving N-S cannot abruptly turn around and move S-N and vice-versa. 
+
 ## Junction 
+When two paths intersect, a constraint must be placed to prevent multiple trains in the same intersection which can cause accidents to occur. We shall use the point structure as described in ![ref] to control movements of trains in intersection. Consider the intersection between path <1,5> and path <3,4>:
+
+![Figure 6: Junction](./PetriDiagram/Junction.drawio.svg)
+
+A train passing the junction from section 1 to 5 is represented by the firing of transition $t_{15}$, which requires a marking at $p_{1L}$ (a train is currently present in section 1) and a marking at place $R_1$ of the point system (right path is available for passing). Similarly, passage from section 3 to section 4 requires markings at $p_{3L}$ and $L_1$. Initially, $R_1$ is marked to indicate passenger trains having higher passage priority than freight trains at junction. 
+
+Marking can be changed from $L1$ to $R1$ via the transition $t_{L1j1}$ to place $j_1$ and then firing transition $t_{j1R1}$ to place $R1$, which now enables freight passage. 
+
+## Capacity Constraint 
+

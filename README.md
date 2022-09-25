@@ -1,12 +1,12 @@
 # PetriNet Modelling of a Rail Network
 The network of interest is given as follows, which consists of 11 sections.
 
-![Figure 1: Whole Network](PetriDiagram/WholeNetwork.png)
+![Figure 1: Whole Network](PetriDiagram/WholeNetwork.PNG)
 
 The network can be further divided into the passenger line: 
-![Figure 2: Passenger Line](PetriDiagram/PassengerLine.png)
+![Figure 2: Passenger Line](PetriDiagram/PassengerLine.PNG)
 and the freight line connecting to the Islington Workshop:
-![Figure 3: Passenger Line](PetriDiagram/FreightLine.png)
+![Figure 3: Passenger Line](PetriDiagram/FreightLine.PNG)
 The two lines are disconnected and trains cannot be move from passenger line to freight line and vice versa. 
 
 # Train movements:

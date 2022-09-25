@@ -103,7 +103,9 @@ It is assumed that all transitions in the above diagram are both controllable an
 Local deadlocks are also possible. For instance, dead-lock would occur if there are a train on section 3 and/or section 7 moving South and a train on section 7 and/or 11 moving North at the same time. Such situations are best handled with additional linear constraints on the marking ![ref]. We may stipulate that if there is a train on section 3 and/or 7 moving South then there should not be a train on section 7 and/or 11 moving North at the same time. This could be expressed as a system of linear constraints
 
 $$m_{7L} + m_{11R} \leq 1$$
+
 $$m_{3L} + m_{7R} \leq 1 $$
+
 $$m_{3L} + m_{11R} \leq 1$$
 
 

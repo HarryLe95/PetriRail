@@ -92,11 +92,30 @@ The full model is shown with initial markings indicating that all sections are i
 
 ![Figure 11: Full Model](./PetriDiagram/fullmodel.drawio.svg)
 
-The two junctions are controlled using point $j_1$ (described previously) and $j_2$. $j_2$ system contains three places $L_2$ that allows passage from section 5 to 8, $R_2$ that allows passage from section 9 to 6, and $M_2$ that allows for passage from 5 to 9 and 10 to 6 at the same time. 
+Uni-directional sections only have one place (sections 1, 2, 5, 6, 8, 10); bidirectional sections have two places with $L$ and $R$ sub-indices to indicate the travel direction of trains on those sections (sections 4, 7, 9, 11). Section 3 has 3 places, with $U$ indicating presence of trains travelling from 3 to 4, $L$ from $3$ to $5$, and $R$ $5$ to $3$.
 
-# Limitations
+The two junctions are controlled using points $j_1$ and $j_2$. $j_2$ system contains three places, with $L_2$ enabling passage from $5$ to $8$, $R_2$ from section 9 to 6, and $M_2$ from 5 to 9 and 10 to 6 at the same time. Similarly, when $L_1$ is marked, passages from 3 to 4 or from 4 to 3 are allowed. When $R_1$ is marked, passages from $1$ to $5$ and $7$ to $3$ are allowed.  
+
+# Refinements
 
 It is assumed that all transitions in the above diagram are both controllable and observable, which corresponds to having a physical semaphore that can stop a train on its track at every transition. This assumption is used to justify that the monitors are admissible. 
 
-Local deadlocks are also possible. For instance, dead-lock would occur if there are a train on section 7 moving South and a train on section 11 moving North at the same time. Such situations are best handled with additional linear constraints on the marking ![ref]. We may stipulate that if there is a train on section 7 moving South then there should not be a train on section 11 moving North at the same time. This could be expressed as a linear constraint
-$$m_{7L} + m_{11R} \leq 1 $$
+Local deadlocks are also possible. For instance, dead-lock would occur if there are a train on section 3 and/or section 7 moving South and a train on section 7 and/or 11 moving North at the same time. Such situations are best handled with additional linear constraints on the marking ![ref]. We may stipulate that if there is a train on section 3 and/or 7 moving South then there should not be a train on section 7 and/or 11 moving North at the same time. This could be expressed as a system of linear constraints
+$$
+\begin{cases}
+m_{7L} + m_{11R} &\leq 1 \\
+m_{3L} + m_{7R} &\leq 1 \\ 
+m_{3L} + m_{11R} &\leq 1\\
+\end{cases}
+$$
+
+A similar deadlock is due to the presence of a train on section 3 heading to 4 and a train from 4 heading to 3 at the same time. This can be avoided by the linear constraint 
+$$m_{3U} + m_{4R} \leq 1$$
+
+Note that the previous constraints and place-transition model is inadequate to handle the two new linear constraints - i.e. having $p_{4R}$ and $p_{3U}$ marked at the same time is totally valid, while the new constraint specifies that at most only one of them can be marked at any given time. Again, we can use the monitor place to ensure linear, as shown in the updated diagram: 
+
+![Figure 12: Full Model with constraint](./PetriDiagram/fullmodelLinearConstraint.svg)
+
+The new place $p_{34M}$ ensures that if there is a train on section 3 heading 4, a new train heading from 4 to 3 cannot enter section 4. The full models with all constraints are provided: 
+
+![Figure 12: Full Model with constraint](./PetriDiagram/fullmodellAllConstraints.svg)

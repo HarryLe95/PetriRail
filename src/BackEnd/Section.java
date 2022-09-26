@@ -3,7 +3,7 @@ package src.BackEnd;
 
 public class Section {
     int sectionID;
-    Train train;
+    public Train train;
     boolean occupied;
 
     /**
@@ -41,7 +41,7 @@ public class Section {
         if (this.train == train) {
             return;
         }
-        throw new IllegalStateException("Current track is occupied.");
+        throw new IllegalStateException("Track " + sectionID + " is currently occupied.");
     }
 
     /**
@@ -67,4 +67,5 @@ public class Section {
             this.train = null;
         }
     }
+
 }

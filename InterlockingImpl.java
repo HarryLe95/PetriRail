@@ -243,17 +243,4 @@ public class InterlockingImpl implements Interlocking {
         return repr;
     }
 
-    public static void main(String[] args) {
-        Interlocking interlock = new InterlockingImpl();
-        interlock.addTrain("t34", 3, 4);
-        interlock.addTrain("t18", 1, 8);
-        interlock.addTrain("t92", 9, 2);
-        System.out.println(interlock);
-        interlock.moveTrains(new String[]{"t18","t92","t34"});
-        System.out.println(interlock);
-        interlock.moveTrains(new String[]{"t18","t92","t34"});
-        System.out.println(interlock);
-        interlock.moveTrains(new String[]{"t18","t92","t34"});
-        System.out.println(interlock);
-    }
 }

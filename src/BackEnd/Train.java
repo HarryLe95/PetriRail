@@ -21,10 +21,10 @@ public class Train {
 
     public static HashSet<String> allTrains = new HashSet<>();
 
-    String trainName;
-    int start;
-    int end;
-    int journeyIndex;
+    public final String trainName;
+    private final int start;
+    private final int end;
+    private int journeyIndex;
 
     /**
      * Initialise a new train
@@ -101,10 +101,15 @@ public class Train {
         return -1;
     }
 
-    public void move() throws IllegalArgumentException{
-        if (isInService()){
+    /**
+     * Move train to the next track section
+     *
+     * @throws IllegalArgumentException if trying to move a train not in the network
+     */
+    public void move() throws IllegalArgumentException {
+        if (isInService()) {
             journeyIndex++;
-            if (journeyIndex >= getPath().size()){
+            if (journeyIndex >= getPath().size()) {
                 allTrains.remove(trainName);
             }
             return;

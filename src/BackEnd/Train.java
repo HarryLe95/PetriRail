@@ -35,7 +35,7 @@ public class Train {
      * @throws IllegalArgumentException if trying to initialise a train in service or
      *                                  if there is no path from start to end.
      */
-    Train(String trainName, int start, int end) throws IllegalArgumentException {
+    public Train(String trainName, int start, int end) throws IllegalArgumentException {
         if (!allPaths.containsKey(Pair.of(start, end))) {
             throw new IllegalArgumentException("No path exists between " + start + " and " + end);
         }
@@ -99,6 +99,14 @@ public class Train {
             return getPath().get(journeyIndex + 1);
         }
         return -1;
+    }
+
+    /**
+     * Get the destination of current train
+     * @return destination section
+     */
+    public int getDestination(){
+        return end;
     }
 
     /**

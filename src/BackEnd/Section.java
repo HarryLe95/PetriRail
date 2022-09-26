@@ -1,7 +1,7 @@
 
 package src.BackEnd;
 
-class Section {
+public class Section {
     int sectionID;
     Train train;
     boolean occupied;
@@ -11,7 +11,7 @@ class Section {
      *
      * @param sectionID name of the train section to add
      */
-    Section(int sectionID) {
+    public Section(int sectionID) {
         this.sectionID = sectionID;
         this.train = null;
         this.occupied = false;

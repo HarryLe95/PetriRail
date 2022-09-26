@@ -14,7 +14,7 @@ public class Train {
             Map.entry(Pair.of(3, 4), List.of(3, 4)),
             Map.entry(Pair.of(4, 3), List.of(4, 3)),
             Map.entry(Pair.of(9, 2), List.of(9, 6, 2)),
-            Map.entry(Pair.of(10, 8), List.of(10, 6, 2)),
+            Map.entry(Pair.of(10, 2), List.of(10, 6, 2)),
             Map.entry(Pair.of(3, 11), List.of(3, 7, 11)),
             Map.entry(Pair.of(11, 3), List.of(11, 7, 3))
     ));
@@ -42,9 +42,11 @@ public class Train {
         if (allTrains.contains(trainName)) {
             throw new IllegalArgumentException("Train " + trainName + " is in service.");
         }
+        this.trainName = trainName;
         this.start = start;
         this.end = end;
         this.journeyIndex = 0;
+        allTrains.add(trainName);
     }
 
     /**

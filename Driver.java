@@ -1,6 +1,6 @@
 import src.BackEnd.Interlocking;
 
-public class InterlockingDriver {
+public class Driver {
     public static void main(String[] args) {
         Interlocking network = new InterlockingImpl();
         network.addTrain("t18",1,8);

@@ -1,5 +1,4 @@
 import org.junit.Test;
-import src.BackEnd.Interlocking;
 
 import static org.junit.Assert.*;
 

@@ -1,5 +1,3 @@
-import src.BackEnd.Interlocking;
-
 public class Driver {
     public static void main(String[] args) {
         Interlocking network = new InterlockingImpl();

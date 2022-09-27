@@ -1,5 +1,4 @@
 
-import src.BackEnd.Interlocking;
 import src.BackEnd.Section;
 import src.BackEnd.Train;
 import src.utils.Pair;

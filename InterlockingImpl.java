@@ -1,3 +1,16 @@
+/**
+ * Implementation of Interlocking interface
+ *
+ * Important fields/attributes - idk, I am a Python Programmer
+ * Dictionary(HashMap) `constraints` - define constraints for addTrain method
+ * Each key of constrainst define a train (source -> target destination)
+ * that can be added to the system if the trains defined in the corresponding values are not present
+ * -i.e. if a train from 4 to 3 is present, train from 3 to 4 cannot be added otherwise would cause a deadlock
+ *
+ *  Dictionary(HashMap) `priority`
+ *  Each value in priority defines a train or a set of trains that has priority in movement over corresponding key
+ *
+ */
 
 import src.BackEnd.Section;
 import src.BackEnd.Train;
@@ -10,22 +23,23 @@ public class InterlockingImpl implements Interlocking {
 
     HashMap<String, Train> trains;
 
+    //Constraints to be check when calling addTrain method
     HashMap<Pair<Integer, Integer>, Set<Pair<Integer, Integer>>> constraints = new HashMap<>(Map.ofEntries(
             Map.entry(Pair.of(4, 3), Set.of(Pair.of(3, 4))),
             Map.entry(Pair.of(3, 4), Set.of(Pair.of(4, 3))),
             Map.entry(Pair.of(3, 11), Set.of(Pair.of(11, 3), Pair.of(7, 3))),
-            Map.entry(Pair.of(11, 3), Set.of(Pair.of(3, 11), Pair.of(7, 11)))
+            Map.entry(Pair.of(11, 3), Set.of(Pair.of(3, 11), Pair.of(7, 11))),
+            Map.entry(Pair.of(9, 2), Set.of(Pair.of(1, 9), Pair.of(5, 9)))
     ));
 
+    //Priority to be check when calling moveTrains method
     HashMap<Pair<Integer, Integer>, Set<Pair<Integer, Integer>>> priority = new HashMap<>(Map.ofEntries(
             Map.entry(Pair.of(3, 4), Set.of(
-                    Pair.of(1, 8),
-                    Pair.of(1, 9),
+                    Pair.of(1, 5),
                     Pair.of(6, 2)
             )),
             Map.entry(Pair.of(4, 3), Set.of(
-                    Pair.of(1, 8),
-                    Pair.of(1, 9),
+                    Pair.of(1, 5),
                     Pair.of(6, 2)
             )),
             Map.entry(Pair.of(9, 6), Set.of(
@@ -48,6 +62,11 @@ public class InterlockingImpl implements Interlocking {
         }
     }
 
+    /**
+     * Check if there is a priority target to give way to
+     * @param key - pair of integers defining current section and section to move to
+     * @return true if a priority train is not in the system false otherwise
+     */
     private boolean hasPriorityTarget(Pair<Integer, Integer> key) {
         Set<Pair<Integer, Integer>> priorityTarget = priority.get(key);
         if (priorityTarget == null) {
@@ -59,16 +78,23 @@ public class InterlockingImpl implements Interlocking {
             if (!section.isOccupied()) {
                 continue;
             }
-            if (section.train.getDestination() == targetDestination) {
+            if (section.train.getNextSection() == targetDestination) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Check if the current train can be moved.
+     *
+     * Train can be moved if no train with higher priority is in the system, and if the next section is not occupied
+     * @param train train to be moved
+     * @return true if train can be moved, false otherwise
+     */
     private boolean isMovable(Train train) {
         Section nextSection = sections.get(train.getNextSection());
-        Pair<Integer, Integer> key = Pair.of(train.getSection(), train.getDestination());
+        Pair<Integer, Integer> key = Pair.of(train.getSection(), train.getNextSection());
         //If nextSection is exit point -> Movable
         if (nextSection == null) {
             return true;
@@ -80,6 +106,11 @@ public class InterlockingImpl implements Interlocking {
         return true;
     }
 
+    /**
+     * Move a train object if permitted
+     * @param train - train to be moved
+     * @return false if train is not movable else true
+     */
     private boolean moveTrain(Train train) {
         if (isMovable(train)) {
             Section currentSection = sections.get(train.getSection());
@@ -148,7 +179,7 @@ public class InterlockingImpl implements Interlocking {
                 throw new IllegalArgumentException("Train " + name + " is not in service.");
             }
             Train train = trains.get(name);
-            Pair<Integer, Integer> key = Pair.of(train.getSection(), train.getDestination());
+            Pair<Integer, Integer> key = Pair.of(train.getSection(), train.getNextSection());
             if (prioritySet.contains(key)) {
                 priorityNames.add(name);
                 continue;

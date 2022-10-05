@@ -125,5 +125,12 @@ public class Train {
         throw new IllegalArgumentException("Trying to move a train not in service.");
     }
 
-
+    /**
+     * Remove train from all trains
+     */
+    public static void removeTrain(String trainName){
+        if (allTrains.contains(trainName)){
+            allTrains.remove(trainName);
+        }
+    }
 }

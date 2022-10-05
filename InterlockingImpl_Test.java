@@ -1,4 +1,5 @@
 import org.junit.Test;
+import src.BackEnd.Train;
 
 import static org.junit.Assert.*;
 
@@ -38,5 +39,81 @@ public class InterlockingImpl_Test {
         network.moveTrains(new String[]{"a19"});
         network.moveTrains(new String[]{"a19"});
         network.addTrain("t92", 9, 2);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAddTrainFull3(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("a34", 3, 4);
+        network.addTrain("a43", 4, 3);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAddTrainFull4(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("b34", 3, 4);
+        network.addTrain("b43", 4, 3);
+        Train.removeTrain("b34");
+    }
+
+    @Test
+    public void testMove1(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("b34", 3, 4);
+        network.moveTrains(new String[]{"b34"});
+        assertEquals(network.getSection(4), "b34");
+        assertEquals(network.getTrain("b34"),4);
+        network.moveTrains(new String[]{"b34"});
+        assertNull(network.getSection(3));
+    }
+
+    @Test
+    public void testMove2(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("b43", 4, 3);
+        assertNull(network.getSection(3));
+        network.moveTrains(new String[]{"b43"});
+        assertNull(network.getSection(4));
+        assertEquals(network.getTrain("b43"),3);
+        network.moveTrains(new String[]{"b43"});
+    }
+
+    @Test
+    public void testMove3(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("b18", 1, 8);
+        network.moveTrains(new String[]{"b18"});
+        network.addTrain("b92", 9, 2);
+        network.moveTrains(new String[]{"b18", "b92"});
+        network.moveTrains(new String[]{"b18","b92"});
+        network.moveTrains(new String[]{"b92"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMoveTrainNotInService1(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("b34", 3, 4);
+        network.moveTrains(new String[]{"b34"});
+        network.moveTrains(new String[]{"b34"});
+        network.moveTrains(new String[]{"b34"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMoveTrainNotInService2(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("b43", 3, 4);
+        network.moveTrains(new String[]{"b43"});
+        network.moveTrains(new String[]{"b43"});
+        network.moveTrains(new String[]{"b43"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMoveTrainNotInService3(){
+        Interlocking network = new InterlockingImpl();
+        network.addTrain("b18", 1, 8);
+        network.moveTrains(new String[]{"b18"});
+        network.moveTrains(new String[]{"b18"});
+        network.moveTrains(new String[]{"b18"});
+        network.moveTrains(new String[]{"b18"});
     }
 }

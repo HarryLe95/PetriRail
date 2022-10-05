@@ -33,8 +33,8 @@ public class Section_Test {
     public void testMove(){
         Section s1 = new Section(1);
         Section s5 = new Section(5);
-        Train t1 = new Train("a1", 1, 8);
-        Train t2 = new Train("a2", 1, 8);
+        Train t1 = new Train("b1", 1, 8);
+        Train t2 = new Train("b2", 1, 8);
         s1.addTrain(t1);
         s1.moveTrain();
         s5.addTrain(t1);

@@ -204,6 +204,11 @@ public class InterlockingImpl implements Interlocking {
         }
         return getSection(trackSection);
     }
+
+    public static void removeTrain(String trainName){
+        Train.removeTrain(trainName);
+    }
+
     /**
      * Print to console the network for debugging purposes
      */

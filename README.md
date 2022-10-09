@@ -100,7 +100,7 @@ The two junctions are controlled using points $j_1$ and $j_2$. $j_2$ system cont
 
 It is assumed that all transitions in the above diagram are both controllable and observable, which corresponds to having a physical semaphore that can stop a train on its track at every transition. This assumption is used to justify that the monitors are admissible. 
 
-Local deadlocks are also possible. For instance, dead-lock would occur if there are a train on section 3 and/or section 7 moving South and a train on section 7 and/or 11 moving North at the same time. Such situations are best handled with additional linear constraints on the marking ![ref]. We may stipulate that if there is a train on section 3 and/or 7 moving South then there should not be a train on section 7 and/or 11 moving North at the same time. This could be expressed as a system of linear constraints
+Local deadlocks are also possible. For instance, dead-lock would occur if there are a train on section 3 and/or section 7 moving South and a train on section 7 and/or 11 moving North at the same time. Such situations are best handled with additional linear constraints on the marking [2]. We may stipulate that if there is a train on section 3 and/or 7 moving South then there should not be a train on section 7 and/or 11 moving North at the same time. This could be expressed as a system of linear constraints
 
 $$m_{7L} + m_{11R} \leq 1$$
 

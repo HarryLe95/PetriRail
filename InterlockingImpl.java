@@ -29,10 +29,11 @@ public class InterlockingImpl implements Interlocking {
             Map.entry(Pair.of(3, 4), Set.of(Pair.of(4, 3))),
             Map.entry(Pair.of(3, 11), Set.of(Pair.of(11, 3), Pair.of(7, 3))),
             Map.entry(Pair.of(11, 3), Set.of(Pair.of(3, 11), Pair.of(7, 11))),
+            Map.entry(Pair.of(1, 9), Set.of(Pair.of(9, 2))),
             Map.entry(Pair.of(9, 2), Set.of(Pair.of(1, 9), Pair.of(5, 9)))
     ));
 
-    //Priority to be check when calling moveTrains method
+    //Priority to be checked when calling moveTrains method
     HashMap<Pair<Integer, Integer>, Set<Pair<Integer, Integer>>> priority = new HashMap<>(Map.ofEntries(
             Map.entry(Pair.of(3, 4), Set.of(
                     Pair.of(1, 5),
